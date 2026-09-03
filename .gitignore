@@ -17,6 +17,9 @@ yarn-error.log*
 
 # Dependencies
 node_modules/
+yarn.lock
+.pnp.*
+.yarn/
 
 # Hexo build output
 public/
