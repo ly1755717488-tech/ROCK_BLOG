@@ -1,7 +1,7 @@
 ---
 title: MimirQ 企业知识库搭建要点：把 RAG 做成可审计的数据流水线
 date: 2026-09-04 17:15:03
-updated: 2026-09-04 17:15:03
+updated: 2026-09-04 17:40:00
 tags:
   - RAG
   - 企业知识库
@@ -11,7 +11,7 @@ tags:
 categories:
   - 教程
 cover: /img/cover-mimirq.png
-top_img: false
+top_img: /img/cover-mimirq.png
 description: MimirQ 偏向 RAG 基础设施层，解决企业知识库“排错难、改崩效果、无法验收”的工程痛点。本文梳理可观察性、插件合约、组件工厂、Golden 门禁、证据优先与权限裁剪等核心要点。
 keywords: RAG,企业知识库,MimirQ,Citation,Golden,可观测性
 ---
