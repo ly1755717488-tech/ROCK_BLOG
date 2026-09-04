@@ -10,7 +10,7 @@ tags:
   - 工程化
 categories:
   - 教程
-cover: /img/index.png
+cover: /img/cover-vibe-coding.png
 top_img: false
 description: 很多人以为 Vibe Coding 是“凭感觉写代码”。真正高效的玩法，是用架构思维、工具分工和分级工作流，把 AI 编程从玄学变成可交付的工程实践。
 keywords: Vibe Coding,AI编程,Cursor,Trellis,OpenSpec,提示词工程

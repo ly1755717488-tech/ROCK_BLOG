@@ -15,7 +15,7 @@ nav:
   display_title: true
   display_post_title: true
   # Whether to fix navigation bar
-  fixed: false
+  fixed: true
 
 menu:
   首页: / || fas fa-home
@@ -171,7 +171,7 @@ subtitle:
   source: false
   # If you close the typewriter effect, the subtitle will only show the first line of sub
   sub:
-    - Never put off till tomorrow what you can do today
+    - 从问题出发，而不是从焦虑出发。因为焦虑出发会越学越宽，而问题出发会越学越聚焦。
 
 # Article layout on the homepage
 # 1: Cover on the left, info on the right
@@ -291,7 +291,7 @@ aside:
     category: true
   card_author:
     enable: true
-    description: 技术爱好者 | 博客作者
+    description: 拼芋圆芋泥芒果椰汁
     button:
       enable: true
       icon: fab fa-github
