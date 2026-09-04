@@ -10,7 +10,7 @@ tags:
   - 架构设计
 categories:
   - 教程
-cover: /img/cover-eventbus.png
+cover: /img/cover-mimirq.png
 top_img: false
 description: MimirQ 偏向 RAG 基础设施层，解决企业知识库“排错难、改崩效果、无法验收”的工程痛点。本文梳理可观察性、插件合约、组件工厂、Golden 门禁、证据优先与权限裁剪等核心要点。
 keywords: RAG,企业知识库,MimirQ,Citation,Golden,可观测性
