@@ -439,6 +439,37 @@
   font-weight: 500;
 }
 
+.note-table-wrap {
+  overflow-x: auto;
+  margin: 0 0 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(60, 55, 45, 0.08);
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.note-card__body table {
+  margin: 0 !important;
+  width: 100%;
+  min-width: 520px;
+  border-collapse: collapse;
+  font-size: 0.9em;
+}
+
+.note-card__body th,
+.note-card__body td {
+  padding: 10px 12px;
+  border: 1px solid rgba(60, 55, 45, 0.08);
+  vertical-align: top;
+  line-height: 1.65;
+}
+
+.note-card__body th {
+  background: rgba(73, 177, 245, 0.08);
+  color: #2f2d29;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
 @media screen and (max-width: 768px) {
   .notes-board {
     gap: 16px;

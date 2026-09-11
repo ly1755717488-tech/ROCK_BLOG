@@ -1,12 +1,99 @@
 ---
 title: 随笔
 date: 2026-09-02 15:30:00
-updated: 2026-09-11 10:08:00
+updated: 2026-09-11 14:31:00
 type: "notes"
 comments: false
 ---
 
 <div class="notes-board">
+
+<article class="note-card note-card--memo">
+  <header class="note-card__head">
+    <span class="note-card__badge">小记</span>
+    <time class="note-card__time">2026-09-11</time>
+  </header>
+  <h2 class="note-card__title">正则化 vs 归一化：核心区别</h2>
+  <div class="note-card__body">
+    <p class="note-card__lead">归一化：预处理，改输入数据的数值分布，解决数值尺度问题；正则化：训练约束，防止模型过拟合，提升泛化能力。</p>
+    <div class="note-table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>对比维度</th>
+            <th>归一化（Normalization / Standardization）</th>
+            <th>正则化（Regularization）</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>核心目的</strong></td>
+            <td>统一特征取值范围，消除量纲影响，<strong>加速收敛、保证梯度稳定</strong></td>
+            <td>抑制过拟合，降低模型在训练集上的过度拟合，<strong>提升泛化能力</strong></td>
+          </tr>
+          <tr>
+            <td><strong>作用阶段</strong></td>
+            <td><strong>数据预处理阶段</strong>，训练之前就对原始特征做变换</td>
+            <td><strong>模型训练阶段</strong>，在损失 / 参数更新过程施加约束</td>
+          </tr>
+          <tr>
+            <td><strong>作用对象</strong></td>
+            <td><strong>输入特征 X</strong>（样本数据）</td>
+            <td><strong>模型参数 W、网络结构、标签、样本</strong>（模型本身）</td>
+          </tr>
+          <tr>
+            <td><strong>常见方法</strong></td>
+            <td>Min-Max 归一化、Z-score 标准化、BN（批量归一化，是层内激活归一化）</td>
+            <td>L1/L2、Weight Decay、Dropout、早停、数据增强、标签平滑</td>
+          </tr>
+          <tr>
+            <td><strong>是否改变数据含义</strong></td>
+            <td>保留特征相对大小，只是缩放数值</td>
+            <td>不修改原始输入数据，约束模型学习行为</td>
+          </tr>
+          <tr>
+            <td><strong>过拟合关系</strong></td>
+            <td><strong>不能直接防过拟合</strong>；BN 有轻微正则副作用，但不是它的本职工作</td>
+            <td><strong>核心目标就是对抗过拟合</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note-table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>维度</th>
+            <th>传统机器学习正则</th>
+            <th>深度学习正则</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>模型规模</td>
+            <td>参数少，主要控制特征权重大小（L1/L2）</td>
+            <td>参数海量，除了权重惩罚，还要约束激活、网络连接、训练过程</td>
+          </tr>
+          <tr>
+            <td>主流方法</td>
+            <td>L1、L2、早停</td>
+            <td>Weight Decay、Dropout、BN、标签平滑、数据增强</td>
+          </tr>
+          <tr>
+            <td>优化器影响</td>
+            <td>几乎无差别</td>
+            <td>Weight Decay 在 AdamW 才是正确实现，Adam+L2 会有偏差</td>
+          </tr>
+          <tr>
+            <td>作用对象</td>
+            <td>模型参数</td>
+            <td>参数、神经元连接、特征分布、标签、样本</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</article>
 
 <article class="note-card note-card--essay">
   <header class="note-card__head">
