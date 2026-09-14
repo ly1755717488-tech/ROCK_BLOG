@@ -1,12 +1,23 @@
 ---
 title: 随笔
 date: 2026-09-02 15:30:00
-updated: 2026-09-11 14:31:00
+updated: 2026-09-14 09:29:00
 type: "notes"
 comments: false
 ---
 
 <div class="notes-board">
+
+<article class="note-card note-card--memo">
+  <header class="note-card__head">
+    <span class="note-card__badge">小记</span>
+    <time class="note-card__time">2026-09-14</time>
+  </header>
+  <h2 class="note-card__title">回调不等于数据同步</h2>
+  <div class="note-card__body">
+    <p class="note-card__lead">回调是「有人变了，快来查一下」的提醒；真正的数据同步，是你收到提醒之后，主动去企微拉最新资料，再写入 ERP。</p>
+  </div>
+</article>
 
 <article class="note-card note-card--memo">
   <header class="note-card__head">
