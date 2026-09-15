@@ -1,12 +1,61 @@
 ---
 title: 随笔
 date: 2026-09-02 15:30:00
-updated: 2026-09-15 17:28:00
+updated: 2026-09-15 17:30:00
 type: "notes"
 comments: false
 ---
 
 <div class="notes-board">
+
+<article class="note-card note-card--memo">
+  <header class="note-card__head">
+    <span class="note-card__badge">小记</span>
+    <time class="note-card__time">2026-09-15</time>
+  </header>
+  <h2 class="note-card__title">大模型选型逻辑</h2>
+  <div class="note-card__body">
+    <p class="note-card__lead">从业务约束出发，优先级：<strong>能力需求 → 成本 → 延迟 → 隐私合规 → 运维负担</strong></p>
+  </div>
+</article>
+
+<article class="note-card note-card--essay">
+  <header class="note-card__head">
+    <span class="note-card__badge">随笔</span>
+    <time class="note-card__time">2026-09-15</time>
+  </header>
+  <h2 class="note-card__title">上下文压缩：弱模型压缩质量不行怎么办</h2>
+  <div class="note-card__body">
+    <p>上下文压缩本质是：保留关键信息，删减冗余。模型能力不足时，不要完全依赖大模型做压缩，走<strong>混合方案</strong>：</p>
+    <ol>
+      <li>
+        <p><strong>非 LLM 前置压缩（优先）</strong></p>
+        <ul>
+          <li>规则 / 检索：按时间过滤、去重、移除无关日志、固定模板；</li>
+          <li>关键词抽取、摘要提取用轻量模型，甚至传统 NLP；</li>
+          <li>按重要性打分，直接丢弃低权重片段，不交给大模型。</li>
+        </ul>
+      </li>
+      <li>
+        <p><strong>拆分压缩任务，不要一次性压缩超长文本</strong></p>
+        <p>分块局部摘要，再合并局部摘要，避免一次性超长输入压垮弱模型。</p>
+      </li>
+      <li>
+        <p><strong>改变压缩策略：不做全文摘要，做信息抽取</strong></p>
+        <p>不要求模型写总结，改为结构化抽取：<code>问题、关键结论、待办、冲突点</code>，结构化输出更容易稳住质量。</p>
+      </li>
+      <li>
+        <p><strong>增加校验层</strong></p>
+        <p>压缩完成后做轻量校验：检查是否丢失关键实体 / 编号；丢失则保留原文片段。</p>
+      </li>
+      <li>
+        <p><strong>兜底策略</strong></p>
+        <p>压缩失败 / 丢失关键信息时，回退原始上下文，牺牲 token 换正确性。</p>
+      </li>
+    </ol>
+    <p><strong>核心思路：</strong>把重压缩工作交给检索 + 传统手段，弱模型只做结构化提炼，而不是让弱模型做全文浓缩。</p>
+  </div>
+</article>
 
 <article class="note-card note-card--essay">
   <header class="note-card__head">
