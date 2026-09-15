@@ -1,7 +1,7 @@
 ---
 title: 随笔
 date: 2026-09-02 15:30:00
-updated: 2026-09-15 10:45:00
+updated: 2026-09-15 11:16:00
 type: "notes"
 comments: false
 ---
@@ -182,6 +182,7 @@ comments: false
   <h2 class="note-card__title">关于垂直逆向复刻网站 Skills 有感：Agent 解决的是什么</h2>
   <div class="note-card__body">
     <p class="note-card__lead">Agent 解决的是理解和判断。</p>
+    <p>复刻网页的焚决：<a href="https://github.com/boyang-hu/website-rebuild-skill" target="_blank" rel="noopener noreferrer">boyang-hu/website-rebuild-skill</a></p>
     <ol>
       <li><strong>站点特异的理解：</strong>每个 URL 的栈、bundle 形态、怪癖都不同，要当场读证据再决策。</li>
       <li><strong>长流程编排：</strong>按检查清单选脚本、读 reference、看输出、决定下一步——像现场工头。</li>
