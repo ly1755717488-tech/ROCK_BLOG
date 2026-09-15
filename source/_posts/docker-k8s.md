@@ -1,7 +1,7 @@
 ---
 title: Docker 和 K8s：镜像、Compose、代码进不进镜像
 date: 2026-09-15 15:27:00
-updated: 2026-09-15 15:27:00
+updated: 2026-09-15 16:57:00
 tags:
   - Docker
   - Kubernetes
@@ -65,6 +65,15 @@ Docker 是一款可以把程序和环境打包并运行的工具。K8s 是应用
 
 - `docker run -d --restart always`：容器一停就重启（崩溃、宿主机断电等）
 - `docker run -d --restart unless-stopped`：手动停过的容器不再自动重启
+
+## Docker 和 K8s 的关系
+
+- Docker：**容器引擎**，负责打包镜像、本地创建 / 运行容器。
+- K8s（Kubernetes）：**容器编排平台**。
+
+> 一句话：Docker 是造容器、跑容器的工具；K8s 用来管理一大堆容器，做调度、扩缩容、自愈、服务发现。
+>
+> 类比：Docker = 汽车；K8s = 交通调度中心
 
 ## Kubernetes
 
