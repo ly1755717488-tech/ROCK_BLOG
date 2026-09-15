@@ -1,12 +1,45 @@
 ---
 title: 随笔
 date: 2026-09-02 15:30:00
-updated: 2026-09-15 11:16:00
+updated: 2026-09-15 17:28:00
 type: "notes"
 comments: false
 ---
 
 <div class="notes-board">
+
+<article class="note-card note-card--essay">
+  <header class="note-card__head">
+    <span class="note-card__badge">随笔</span>
+    <time class="note-card__time">2026-09-15</time>
+  </header>
+  <h2 class="note-card__title">AI 调用工具失败怎么解决</h2>
+  <div class="note-card__body">
+    <p>工具调用失败常见类型：格式错误、参数错误、函数幻觉、超时、业务权限报错。分层处理：</p>
+    <ol>
+      <li>
+        <p><strong>第一层：校验拦截（前置）</strong></p>
+        <p>用 JSON Schema / Zod 校验模型输出的工具调用参数，格式不对直接判失败，不调用真实函数。</p>
+      </li>
+      <li>
+        <p><strong>第二层：重试机制</strong></p>
+        <p>区分可重试错误（网络超时、5xx）和不可重试（参数非法、权限不足）；可重试做有限次数重试 + 退避；参数错误不要重试。</p>
+      </li>
+      <li>
+        <p><strong>第三层：错误回传给大模型，让模型自修正</strong></p>
+        <p>把 error message、错误原因返回模型，让它重新生成工具调用；加提示约束：不要编造不存在的参数 / 函数。</p>
+      </li>
+      <li>
+        <p><strong>第四层：兜底降级</strong></p>
+        <p>多次调用失败后，停止工具调用，改用自然语言回答；或交给人工介入。</p>
+      </li>
+      <li>
+        <p><strong>第五层：观测与优化</strong></p>
+        <p>记失败日志，统计幻觉、格式错误高频 case，优化 system prompt；必要时用小模型做工具调用专用微调。</p>
+      </li>
+    </ol>
+  </div>
+</article>
 
 <article class="note-card note-card--essay">
   <header class="note-card__head">
