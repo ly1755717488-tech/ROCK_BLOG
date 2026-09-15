@@ -1,7 +1,7 @@
 ---
-title: Redis 数据类型进阶：String / Hash / List / Set / ZSet / Geo
+title: Redis 进阶：为何快、I/O 复用，以及 String / Hash / List / Set / ZSet / Geo
 date: 2026-09-14 17:00:00
-updated: 2026-09-14 17:00:00
+updated: 2026-09-15 15:15:00
 tags:
   - Redis
   - Hash
@@ -9,13 +9,42 @@ tags:
   - Set
   - ZSet
   - Geo
+  - I/O多路复用
 categories:
   - 教程
 cover: /img/cover-redis-types.png
 top_img: false
-description: Redis 常用数据类型进阶笔记：String 存对象的两种方案、Hash 字段级操作、List 实现栈与队列、Set 抽奖去重、ZSet 有序集合与 Geo 地理空间。
-keywords: Redis,String,Hash,List,Set,ZSet,Geo,BRPOP
+description: Redis（Remote Dictionary Server）笔记：内存 + 单线程 + I/O 多路复用为何快；序列化与 Spring Data Redis；以及 String / Hash / List / Set / ZSet / Geo 的选型与命令。
+keywords: Redis,I/O多路复用,序列化,String,Hash,List,Set,ZSet,Geo,BRPOP,Spring Data Redis
 ---
+
+Redis 全称 Remote Dictionary Server，远程字典服务。本质是一个**内存数据库服务器**：启动 `redis-server` 就启动了一个专门处理键值对的网络服务进程，对外提供存储、缓存、发布订阅等能力，角色和 Web 服务器、数据库服务器一样。
+
+相关讲解：[Redis 是什么、架构怎么设计](https://www.bilibili.com/video/BV18jBiYpEDJ/) · [主从 / 哨兵 / 哨兵集群](https://www.bilibili.com/video/BV1yPPEeoEZZ/) · [集群如何工作](https://www.bilibili.com/video/BV1ge411L7Sh/)
+
+## 为何快
+
+- **内存存储**：读写落在内存，延迟低。
+- **单线程模型**：避免多线程竞争和同步开销。
+- **非阻塞 I/O 与事件驱动**：用 I/O 多路复用同时盯一批连接，有数据再处理。
+
+## I/O 多路复用
+
+![Redis I/O 多路复用模型](/img/redis-types/00-io-multiplex.png)
+
+一个线程监听多个 socket：哪个连接就绪就处理哪个，不必为每个客户端开一条阻塞线程。这是 Redis 能撑高并发、又保持单线程模型的关键。
+
+## Spring Data Redis 与序列化
+
+Spring Data Redis 是专门操作 Redis 服务器的框架模块。
+
+序列化要点：
+
+- **序列化**：内存数据 → 字节 / 字符串，方便存储和传输
+- **反序列化**：字节 / 字符串 → 内存数据，还原后使用
+- Spring Boot 操作 Redis 时，序列化的核心作用是让复杂对象能正常写入、读出 Redis
+
+用 String 存对象时，JSON 序列化就是其中一种落地方式，见下一节对比。
 
 ## String
 
