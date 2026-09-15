@@ -1,12 +1,33 @@
 ---
 title: 随笔
 date: 2026-09-02 15:30:00
-updated: 2026-09-14 09:29:00
+updated: 2026-09-15 10:35:00
 type: "notes"
 comments: false
 ---
 
 <div class="notes-board">
+
+<article class="note-card note-card--essay">
+  <header class="note-card__head">
+    <span class="note-card__badge">随笔</span>
+    <time class="note-card__time">2026-09-15</time>
+  </header>
+  <h2 class="note-card__title">软件开发设计</h2>
+  <div class="note-card__body">
+    <p>软件开发设计：</p>
+    <p>交互部分：ui交互、数据交互、逻辑交互、基础设施：数据权限管理，行为权限管理、报错系统</p>
+    <p>部署发布：域名管理、私有化部署</p>
+    <p>运营维护：监控日志、数据管理和分析、资源管理</p>
+    <p>软件的本质：只是数据收集、复制、转化和传播</p>
+    <ul>
+      <li>任何一个有价值的生产系统，其实它的核心一定是来自于后端</li>
+      <li>前端只是让人更容易理解这个数据而已</li>
+      <li>维护：数据量、权限、性能、安全、并发、集成</li>
+      <li>合格的产品：可靠、可扩展、安全、商业闭环、可观测性（最重要）</li>
+    </ul>
+  </div>
+</article>
 
 <article class="note-card note-card--memo">
   <header class="note-card__head">
