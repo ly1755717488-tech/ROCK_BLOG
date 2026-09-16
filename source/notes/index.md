@@ -1,7 +1,7 @@
 ---
 title: 随笔
 date: 2026-09-02 15:30:00
-updated: 2026-09-16 17:04:00
+updated: 2026-09-16 17:30:00
 type: "notes"
 comments: false
 ---
@@ -20,6 +20,7 @@ comments: false
       <li><strong>Gitleaks</strong>：专门的敏感信息扫描工具，检测代码里有没有硬编码的密钥、密码、Token、API Key 等。</li>
       <li><strong>组合作用</strong>：每次提交代码前自动跑 Gitleaks 扫描，一旦发现 AI 生成的代码里夹带了敏感信息，直接阻止提交，从源头防止密钥泄露到代码库。</li>
     </ul>
+    <p><strong>SonarQube</strong> 是面向代码质量与安全的静态分析平台，支持 40+ 编程语言。核心价值是对所有代码（人工编写 / AI 生成）执行一致的自动化校验，拦截 Bug、安全漏洞、代码坏味道，从源头避免技术债务累积。</p>
   </div>
 </article>
 
