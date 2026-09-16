@@ -1,7 +1,7 @@
 ---
 title: 随笔
 date: 2026-09-02 15:30:00
-updated: 2026-09-16 17:30:00
+updated: 2026-09-16 17:32:00
 type: "notes"
 comments: false
 ---
@@ -13,7 +13,7 @@ comments: false
     <span class="note-card__badge">随笔</span>
     <time class="note-card__time">2026-09-16</time>
   </header>
-  <h2 class="note-card__title">pre-commit 钩子集成 Gitleaks</h2>
+  <h2 class="note-card__title">提交前门禁：Gitleaks 与 SonarQube</h2>
   <div class="note-card__body">
     <ul>
       <li><strong>pre-commit 钩子</strong>：Git 的内置机制，在代码提交（commit）之前会自动触发预设脚本，用来做提交前检查。</li>
