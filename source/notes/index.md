@@ -1,12 +1,27 @@
 ---
 title: 随笔
 date: 2026-09-02 15:30:00
-updated: 2026-09-15 17:30:00
+updated: 2026-09-16 17:04:00
 type: "notes"
 comments: false
 ---
 
 <div class="notes-board">
+
+<article class="note-card note-card--essay">
+  <header class="note-card__head">
+    <span class="note-card__badge">随笔</span>
+    <time class="note-card__time">2026-09-16</time>
+  </header>
+  <h2 class="note-card__title">pre-commit 钩子集成 Gitleaks</h2>
+  <div class="note-card__body">
+    <ul>
+      <li><strong>pre-commit 钩子</strong>：Git 的内置机制，在代码提交（commit）之前会自动触发预设脚本，用来做提交前检查。</li>
+      <li><strong>Gitleaks</strong>：专门的敏感信息扫描工具，检测代码里有没有硬编码的密钥、密码、Token、API Key 等。</li>
+      <li><strong>组合作用</strong>：每次提交代码前自动跑 Gitleaks 扫描，一旦发现 AI 生成的代码里夹带了敏感信息，直接阻止提交，从源头防止密钥泄露到代码库。</li>
+    </ul>
+  </div>
+</article>
 
 <article class="note-card note-card--memo">
   <header class="note-card__head">
