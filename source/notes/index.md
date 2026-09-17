@@ -1,12 +1,48 @@
 ---
 title: 随笔
 date: 2026-09-02 15:30:00
-updated: 2026-09-16 17:32:00
+updated: 2026-09-17 11:30:00
 type: "notes"
 comments: false
 ---
 
 <div class="notes-board">
+
+<article class="note-card note-card--essay">
+  <header class="note-card__head">
+    <span class="note-card__badge">随笔</span>
+    <time class="note-card__time">2026-09-17</time>
+  </header>
+  <h2 class="note-card__title">做 Agent：务实、日志与第一性原理</h2>
+  <div class="note-card__body">
+    <h3>务实优先</h3>
+    <p>务实的品质可以让大模型应用开发工程师走得更远、做得更多。务实让开发者不困于「过度冗长且孤立」的思考里，更容易找到简单有效的方案。</p>
+    <p>很多做 Agent 的人容易陷入「无限复杂架构幻想」：多 Agent 分层、复杂编排、各种花哨组件。务实思路：优先最小可用闭环，先跑通核心链路，用最简单方案解决真实问题，而不是一上来堆砌复杂抽象。<strong>能解决问题的简单方案 &gt; 优雅但无法落地的宏大设计</strong>，这和「非必要不写单测、严控过度设计」的工程约束完全对齐。</p>
+
+    <h3>像 Agent 一样思考</h3>
+    <p>借助执行日志，观察上下文工程的设计缺陷，观察 Harness 的运行漏洞——这是 Agent 工程里很独特的调试思维。</p>
+    <p>不要站在人类视角猜模型会怎么想；代入 Agent 视角：它拿到什么上下文、工具返回什么信息、它能看到哪些日志、它会做哪些错误推理。</p>
+    <p><strong>Harness</strong> 就是 Agent 的执行沙盒 / 执行环境。绝大多数 Agent 失败，问题往往不在模型本身，而在 Harness 环境、上下文传递、工具返回结果的缺陷。</p>
+    <p>核心手段：完整留存执行日志，复现 Agent 每一步的输入输出，定位它在哪一步产生幻觉、错误判断。</p>
+
+    <h3>双向观察：人看 Agent，Agent 看人</h3>
+    <p>人类观察 Agent 的行为很重要，Agent 观察人类的行为也很重要。双向观察，对应「协同 Agent」的人机闭环：</p>
+    <ul>
+      <li><strong>人看 Agent</strong>：人类观测 Agent 的执行轨迹，识别它的弱点、边界 case，用来迭代提示词、工具、Harness（评测、调试）。</li>
+      <li><strong>Agent 看人</strong>：Agent 观察人类操作、决策偏好、纠错行为，做行为模仿、偏好学习，从人类反馈里持续优化（比如轨迹学习、few-shot、偏好微调）。</li>
+    </ul>
+
+    <h3>Lead, don't follow</h3>
+    <p>从第一性原理思考事情的本质，去发现和构建新的东西。不要跟风复刻市面上现成 Agent 框架。剥离行业流行的方案假设，回到底层：这个任务真正需要什么能力？</p>
+    <p>比如代码 Agent 的本质：读取代码 → 规划改动 → 在沙盒执行 → 验证结果。基于底层需求重新设计，而不是直接套别人的多 Agent 模板。</p>
+
+    <h3>不要轻易放弃底层技术</h3>
+    <p>底层技术会极大拓宽视角，要学会站在巨人的肩膀上。Agent 不只是写 prompt。操作系统、容器、沙盒、git、编译器、网络、数据库这些底层知识，决定 Harness 能做到什么程度。</p>
+    <p>比如代码 Agent 要能在隔离环境编译、跑单元测试、管理文件变更；不懂容器 / 进程隔离，就做不出稳定的执行环境。站在巨人肩膀：读懂 OpenAI、Anthropic、Cursor / Grok Bot 这些团队公开工程文章，吸收他们踩过的坑，而不是从零盲试。</p>
+
+    <p><strong>一句话总结：</strong>做 Agent 工程，拒绝空想和跟风；以日志为抓手，双向观察人机交互；扎根底层技术，优先务实落地，用第一性原理推导方案，而不是复制别人的成品。</p>
+  </div>
+</article>
 
 <article class="note-card note-card--essay">
   <header class="note-card__head">
