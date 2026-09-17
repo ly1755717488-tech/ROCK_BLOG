@@ -1,7 +1,7 @@
 ---
 title: 大模型 Agent 工程实践：务实、复盘与底层思考
 date: 2026-09-17 11:48:00
-updated: 2026-09-17 11:48:00
+updated: 2026-09-17 11:53:00
 tags:
   - Agent
   - Harness
@@ -17,6 +17,8 @@ keywords: Agent,Harness,Context Engineering,Agent Loop,务实落地,第一性原
 ---
 
 深耕大模型 Agent 工程落地，愈发明白：能走得远的开发者，靠的是极致的务实、深度的复盘和扎实的底层功底，而不是花哨的架构设计和跟风式开发。
+
+![Agent Loop 全景示意](/img/agent-engineering/01-agent-loop.png)
 
 - **Agent Loop** 是运行的核心，是一切的基础：用户输入任务，LLM 输出指令，工具执行并返回结果，不断循环直到结束。
 - **Context Engineering**：静态系统提示词结构稳固之后，Agent Loop 运行中仍需要大量动态信息——常见有效的有用户记忆、会话历史、用户输入、系统提示词、工具定义等。上下文是 Agent Loop 有效的关键；长程运行里上下文不断积累，会出现漂移、污染、干扰、冲突等问题，所以需要上下文管理方法，以及渐进式加载。
