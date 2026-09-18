@@ -1,12 +1,31 @@
 ---
 title: 随笔
 date: 2026-09-02 15:30:00
-updated: 2026-09-17 11:44:00
+updated: 2026-09-18 21:56:00
 type: "notes"
 comments: false
 ---
 
 <div class="notes-board">
+
+<article class="note-card note-card--essay">
+  <header class="note-card__head">
+    <span class="note-card__badge">随笔</span>
+    <time class="note-card__time">2026-09-18</time>
+  </header>
+  <h2 class="note-card__title">打野节点思路</h2>
+  <div class="note-card__body">
+    <p>访问：<code>https://gist.github.com</code></p>
+    <p>搜索常用的节点协议链接：<code>ss://</code>、<code>vless://</code> 等，选择 <code>Recently updated</code>，如图所示：</p>
+    <p><img src="https://cdn3.ldstatic.com/original/4X/f/5/e/f5e386ebb5abff092c3c2b34e3649bce552feb01.png" alt="Gist 搜索示意"></p>
+    <h3>GitHub 中 Gist 的作用</h3>
+    <p>你写了一小段代码、一段文字、一个 JSON 配置，不想专门新建一个完整项目仓库，只想快速存起来，生成一个链接发给别人看，这就用 Gist。</p>
+    <h3>Raw 链接</h3>
+    <p>就是 Gist 里面文件的「纯原始文本直链」，不带网页 UI、没有按钮、没有广告，浏览器打开直接就是文件本身的内容，方便程序 / 脚本读取。</p>
+    <h3>功能：订阅节点分发</h3>
+    <p>写个脚本，直接通过 git 就可以<strong>定时把最新节点列表自动上传更新到 Gist</strong>。【节点经常会失效、掉线，需要替换新节点】，Gist 会给你一个固定不变的 raw 原始链接。</p>
+  </div>
+</article>
 
 <article class="note-card note-card--essay">
   <header class="note-card__head">
