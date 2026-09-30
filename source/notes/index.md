@@ -1,12 +1,55 @@
 ---
 title: 随笔
 date: 2026-09-02 15:30:00
-updated: 2026-09-30 10:55:43
+updated: 2026-09-30 12:21:50
 type: "notes"
 comments: false
 ---
 
 <div class="notes-board">
+
+<article class="note-card note-card--essay">
+  <header class="note-card__head">
+    <span class="note-card__badge">随笔</span>
+    <time class="note-card__time">2026-09-30</time>
+  </header>
+  <h2 class="note-card__title">理解机制，就懂这些 Prompt 怪现象</h2>
+  <div class="note-card__body">
+    <p>如果理解注意力机制，就不难理解：指令后面加一堆感叹号起不到强调作用，反而会稀释注意力；prompt 重复两遍可以提升性能，重复五遍却会降低表现。</p>
+    <h3>注意力机制</h3>
+    <p>大模型读文字时会分配「关注度」，优先关注重要 token。</p>
+    <ul>
+      <li>一堆 <code>！！！！！</code> 会占用注意力资源，把真正的核心指令冲淡，模型分不清重点；</li>
+      <li>重复 2 遍 prompt：相当于提醒模型这件事很重要，效果变好；</li>
+      <li>重复 5 遍：冗余太多，注意力被反复消耗，反而变差。</li>
+    </ul>
+    <h3>Tokenizer 分词器</h3>
+    <p>如果理解了 Tokenizer 原理，看到模型算出 <code>9.11 &gt; 9.9</code>、或说 <code>strawberry</code> 里只有 2 个 r，就不会大惊小怪。</p>
+    <p>模型不是按人类理解的「单词 / 数字」阅读，而是切成一个个小块（token）。</p>
+    <ol>
+      <li><code>9.11</code> 会被切为 <code>9</code>、<code>.</code>、<code>11</code>；<code>9.9</code> 切为 <code>9</code>、<code>.</code>、<code>9</code>。模型是对 token 编码做运算，不是做数学计算，所以会出现人类看来很蠢的大小比较错误。</li>
+      <li><code>strawberry</code> 分词时可能被切成片段，模型不是直接「读取全部字母」，所以数 r 会数错。</li>
+    </ol>
+    <p>简单说：模型不是认字，是认碎片。</p>
+    <h3>KV 缓存（KV 矩阵）</h3>
+    <p>如果知道每次预测都要综合计算前面所有上下文的 KV 矩阵，就能明白上下文管理有多重要，也明白：模型一旦拒绝要求，继续说服往往没用。</p>
+    <p>模型每一轮回答，都会把上文信息编码保存。</p>
+    <ul>
+      <li>上下文越长，KV 占用越大；前面已经判定拒绝（安全判定），这个结论已经写入上下文 KV。后面再劝说、软磨硬泡，模型依然带着前面的判定，基本不会改主意。</li>
+      <li>所以长对话要精简历史、清理无效旧对话，这就是上下文管理。</li>
+    </ul>
+    <h3>过拟合与思考标记</h3>
+    <p>如果了解过拟合，就更容易理解：为什么强行塞入思考标记，有时反而会得到更随机的回复。</p>
+    <p>过拟合指模型训练时死记硬背样本，泛化变弱。<code>&lt;think&gt;</code> 是 DeepSeek 这类推理模型的内部思考标记。当你强制写入它，会触发进入推理模式，这种模式下更容易发散、不稳定，随机性更强。</p>
+    <h3>语义激活</h3>
+    <p>如果理解语义激活，就能明白：prompt 里用正面要求，往往比负向写法效果更好。</p>
+    <p>模型根据词语关联激活对应语义。</p>
+    <ul>
+      <li>负面写法：「不要犯错、不要编造、不要遗漏」——会先激活「犯错、编造、遗漏」这些词的语义，反而更容易踩坑；</li>
+      <li>正面写法：「请严谨、引用原文、逐条输出」——直接激活你想要的行为，效果更好。</li>
+    </ul>
+  </div>
+</article>
 
 <article class="note-card note-card--essay">
   <header class="note-card__head">
