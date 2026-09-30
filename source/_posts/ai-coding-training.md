@@ -1,7 +1,7 @@
 ---
 title: 【公司AI编程培训】从零基础入门AI编程到团队工程化建设，附公司AI中转站运营模式
 date: 2026-09-30 22:13:08
-updated: 2026-09-30 22:13:08
+updated: 2026-09-30 22:59:25
 tags:
   - AI编程
   - Coding Agent
@@ -15,16 +15,6 @@ cover: /img/cover-ai-coding-training.png
 top_img: false
 description: 从零基础入门 AI 编程到团队工程化建设：Coding Agent、AGENTS.md、Skill、MCP、Grill、Trellis，以及公司 AI 中转站运营模式。
 keywords: AI编程,Coding Agent,AGENTS.md,Skill,MCP,Trellis,中转站,Codex,Claude Code
----
-
-{% note info %}
-整理自 LINUX DO：[【公司AI编程培训】从零基础入门AI编程到团队工程化建设，附公司AI中转站运营模式](https://linux.do/t/topic/2828941)（开发调优）。正文截至原帖主楼，不含评论区。
-{% endnote %}
-
-> 分享一下公司 AI 编程培训的材料，很多都是从 [@luokakale](https://linux.do/u/luokakale) 大佬的文章中抄来的，总结了我认为比较有价值的内容，然后结合公司的实际情况，又加了些自己的东西。
->
-> **强烈建议去看看 [@luokakale](https://linux.do/u/luokakale) 的文章，写得非常好。**
-
 ---
 
 # 本次培训能解决什么问题
