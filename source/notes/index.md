@@ -1,12 +1,35 @@
 ---
 title: 随笔
 date: 2026-09-02 15:30:00
-updated: 2026-09-18 21:56:00
+updated: 2026-09-30 10:55:43
 type: "notes"
 comments: false
 ---
 
 <div class="notes-board">
+
+<article class="note-card note-card--essay">
+  <header class="note-card__head">
+    <span class="note-card__badge">随笔</span>
+    <time class="note-card__time">2026-09-30</time>
+  </header>
+  <h2 class="note-card__title">跟 AI 协作摸到的四个小技巧</h2>
+  <div class="note-card__body">
+    <p>这次做项目又攒了几条亲测有用的经验，记下来。</p>
+    <h3>1. 修不好就引导，结尾加「第一性原理」</h3>
+    <p>Bug 老是修不好时，别干骂。好好跟它聊，帮它理思路，但最后一定要补一句：</p>
+    <p><strong>请你从第一性原理的角度出发，捋清楚刚才的问题症结为我修复它。</strong></p>
+    <p>这句话真有点魔法，像按了重置键，把它从混乱里拉回来，逼它从打地基开始重新看整栋楼的结构。这样给出来的方案通常会好很多。好好说话总比骂人管用，对 AI 也成立。</p>
+    <h3>2. 收尾做对抗性检查</h3>
+    <p>项目收尾时，很多问题自己日常用不到、测不出来，除非经验特别丰富。AI 往往比你见过更多坑——直接让它对这个项目做<strong>对抗性检查</strong>，专门用来拆台。它真能挖出一些设计上的逻辑错误。</p>
+    <h3>3. 前端难搞就让它接管浏览器</h3>
+    <p>前端问题不好解决时，多让它接管浏览器做开发调试。很多时候是你描述不准、观察不细，或者不太熟那些专业名词，开发效果就会打折扣。直接要求它接管浏览器，边看边调。</p>
+    <p>反重力的浏览器调试很好用，腾讯出品的 BrowseSkills 也不错，还有真神 Codex。用哪个丰俭由人。</p>
+    <h3>4. 交货前用动态执行验脚本，别只看静态检查</h3>
+    <p>要求模型交货前写脚本多做测试。文件一庞大，AI 往往只能审查局部——单看每段都正确无误，上下组合起来就错了。重构时尤其危险：任何重构都不能只靠静态语法检查，必须靠<strong>动态沙箱执行</strong>验证运行时引用完整性。</p>
+    <p>该死的 Gemini 就给我犯过三四次这种低级错误：修 Bug 修着修着，把脚本注入页面整段弄丢了。</p>
+  </div>
+</article>
 
 <article class="note-card note-card--essay">
   <header class="note-card__head">
