@@ -1,7 +1,7 @@
 ---
 title: 用顶级模型搞科研：上下文管理比什么都重要
 date: 2026-10-04 21:42:36
-updated: 2026-10-04 21:42:36
+updated: 2026-10-04 21:46:22
 tags:
   - 科研
   - 上下文管理
@@ -10,6 +10,7 @@ tags:
   - 渐进式披露
 categories:
   - 随笔
+cover: /img/cover-ai-research-context-management.png
 top_img: false
 description: 用大模型辅助科研，关键不是一次让它吐完整方案，而是先喂高质量上下文、严格限制当前阶段，再用自己的 taste 多轮迭代。
 keywords: 科研,上下文管理,Zotero,渐进式披露,论文写作,Human in the loop
