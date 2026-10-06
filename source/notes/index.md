@@ -1,12 +1,32 @@
 ---
 title: 随笔
 date: 2026-09-02 15:30:00
-updated: 2026-09-30 12:21:50
+updated: 2026-10-06 22:36:40
 type: "notes"
 comments: false
 ---
 
 <div class="notes-board">
+
+<article class="note-card note-card--essay">
+  <header class="note-card__head">
+    <span class="note-card__badge">随笔</span>
+    <time class="note-card__time">2026-10-06</time>
+  </header>
+  <h2 class="note-card__title">CC 规划、CX 写码：按能力分工更省钱也更快</h2>
+  <div class="note-card__body">
+    <p>Claude Code（CC）和 Codex（CX）擅长的面不一样：CC 偏规划、前端、全栈；CX 偏审代码、后端。底层、C/C++、编译器、解码器这类，两边都不行。</p>
+    <h3>节奏、成本和排版</h3>
+    <p>CC 走 Claude API，单价贵，但适合拿来做规划和拆问题。真正写代码交给 Codex，整体花不了多少钱。</p>
+    <p>CC 最大的好处是让你保持很快的节奏去思考、推进。Codex 别的都还行，就是想太久，排版也不太利于沟通。</p>
+    <h3>权限和并行</h3>
+    <p>两边最大的差别是权限。CC 能做更放开的分析，抓包、软件分析之类，商业场景更对口。CX 权限绕不过去，去掉这一层，Claude API 和 gpt-5.x-codex API 能力其实差不多。CX 这边得绕半天，还没法做到百分之百抓数据分析。</p>
+    <p>软件设计上还有一点：CC 直接多模型并行，所以快；CX 一个模型串行，所以慢。CC 读文件用 Haiku（不管你选的是 Sonnet 还是 Opus 4.5），分析才用你自选的模型。</p>
+    <h3>代码质量和推荐用法</h3>
+    <p>同样的应用场景里，CX 写出来的代码更规范，Bug 也更少。</p>
+    <p>比较好用的办法：用 CC 做规划、分析，再指导 CX 写代码，直接让 CX 执行。成本上划算，能力上也对得上，整体更高效。</p>
+  </div>
+</article>
 
 <article class="note-card note-card--essay">
   <header class="note-card__head">
