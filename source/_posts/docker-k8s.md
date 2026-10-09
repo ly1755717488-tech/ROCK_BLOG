@@ -1,19 +1,20 @@
 ---
 title: Docker 和 K8s：镜像、Compose、代码进不进镜像
 date: 2026-09-15 15:27:00
-updated: 2026-09-15 17:04:00
+updated: 2026-10-09 11:22:22
 tags:
   - Docker
   - Kubernetes
   - docker-compose
   - Dockerfile
   - 容器
+  - Service
 categories:
   - 教程
 cover: /img/cover-docker-k8s.png
 top_img: false
-description: Docker 把程序和环境打包运行；Dockerfile 是清单，镜像是模具，Compose 一键拉起多服务。澄清代码是否打进镜像，以及 SSE、字体、Volume、多副本等部署坑。
-keywords: Docker,K8s,Kubernetes,Dockerfile,docker-compose,Volume,镜像,容器
+description: Docker 把程序和环境打包运行；Dockerfile 是清单，镜像是模具，Compose 一键拉起多服务。澄清代码是否打进镜像，以及 K8s 里 Container / Pod / Service 的层级与集群内外通信。
+keywords: Docker,K8s,Kubernetes,Pod,Service,ClusterIP,Dockerfile,docker-compose,Volume,镜像,容器
 ---
 
 {% note info %}
@@ -81,11 +82,49 @@ Docker 是一款可以把程序和环境打包并运行的工具。K8s 是应用
 >
 > 类比：Docker = 汽车；K8s = 交通调度中心
 
+Docker 造出来的「车」，在 K8s 里不会裸跑：它们会被装进档口（Pod），再挂到稳定窗口（Service）后面。下面把这套层级和通信方式摊开。
+
 ## Kubernetes
 
 ![K8s 定位](/img/docker-k8s/05-k8s.png)
 
 K8s 处在应用服务和服务器之间，暴露一系列 API，让部署、扩容等运维更省事。
+
+### 先理清层级：Container → Pod → Service
+
+从最小运行单元往上：
+
+- **容器（Container）**：最底层的进程隔离单元，真正跑业务代码（比如一个 Java / Node 进程），共享宿主机内核。
+- **Pod**：K8s 的最小调度单元。一个 Pod 里可以有 1 个或多个容器（业务上多数是 1 个）。每个 Pod 有自己的 Pod IP，但 Pod 是临时的——销毁、重启、扩缩容时，IP 都会变。
+- **Service**：服务抽象。它**不跑业务程序，也不是容器**，角色是「稳定访问入口 + 集群内负载均衡」。
+
+### Service 和 Pod 怎么对上
+
+Service 用**标签选择器（selector）**匹配一组 Pod，匹配到的都是它的后端实例：
+
+- **1 个 Service 通常对应多个 Pod**：生产最常见。例如用户服务 3 个副本，就是 3 个 Pod，一起挂在 `user-service` 后面；请求打到 Service，再负载均衡到这 3 个 Pod。
+- 后端 Pod 扩缩容、重启、故障替换时，Service 自动更新端点列表，对调用方透明。
+- 特殊情况下，1 个 Pod 也可以同时被多个 Service 匹配。
+
+通俗一点：
+
+- 容器 = 后厨厨师，真正做菜（执行业务）
+- Pod = 一个后厨档口（里面有一个或多个厨师）
+- Service = 前台收银台 + 派单：有固定窗口地址（稳定 IP / 域名），顾客只到前台下单，前台再分给空闲档口；后厨换人，不影响前台怎么接待
+
+### 服务怎么通信
+
+集群内通信和集群外访问，都主要靠 **Service + DNS**。
+
+**集群内（主流）：**
+
+1. **ClusterIP + 内部 DNS**  
+   每个 Service 有一个稳定的集群内虚拟 IP（ClusterIP）；CoreDNS 还会生成域名，形如 `service-name.namespace.svc.cluster.local`。服务之间用域名或 ClusterIP 调用，是最常用的方式。
+2. **按场景选 Service 类型**  
+   - Headless Service：无 ClusterIP，DNS 直接返回后端 Pod IP 列表，适合有状态服务（如数据库集群）直连  
+   - NodePort / LoadBalancer：主要对外暴露，也可用于节点间访问
+3. **Pod 间直连**  
+   Pod 之间可以用 Pod IP 互通，但 IP 会随重建变化，业务里不推荐直接写死。
 
 ## 澄清误区：镜像装的不止是依赖
 
