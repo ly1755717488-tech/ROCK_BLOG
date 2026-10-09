@@ -1,19 +1,20 @@
 ---
 title: MimirQ 企业知识库搭建要点：把 RAG 做成可审计的数据流水线
 date: 2026-09-04 17:15:03
-updated: 2026-10-08 20:01:35
+updated: 2026-10-09 17:29:36
 tags:
   - RAG
   - 企业知识库
   - MimirQ
   - 可观测性
   - 架构设计
+  - LangGraph
 categories:
   - 教程
 cover: /img/cover-mimirq.png
 top_img: /img/cover-mimirq.png
 description: MimirQ 偏向 RAG 基础设施层，解决企业知识库“排错难、改崩效果、无法验收”的工程痛点。本文梳理可观察性、插件合约、组件工厂、Golden 门禁、证据优先与权限裁剪等核心要点。
-keywords: RAG,企业知识库,MimirQ,Citation,Golden,可观测性
+keywords: RAG,企业知识库,MimirQ,Citation,Golden,可观测性,LangGraph,LangChain,ARQ,RabbitMQ
 ---
 
 {% note info %}
@@ -22,6 +23,12 @@ MimirQ 偏向 RAG 基础设施层，解决企业知识库「排错难、改崩�
 
 **浓缩成一句话：**  
 学的是把 AI 知识库当成可审计的数据流水线来建——组件可插拔、过程可看见、版本可回归；模型只是流水线里可替换的一环。
+
+形成的是「**业务内核自研 + 通用能力复用**」的三层分层：
+
+- **上层（编排）**：LangGraph 负责流程控制（顺序、分支、循环、状态持久化）
+- **中层（组件）**：LangChain 负责组件标准化（文档、模型、检索、分割）
+- **底层（业务）**：自研逻辑（检索策略、引用溯源、质量校验、切块插件）
 
 ## 1. 先治链路，再谈模型
 
@@ -352,6 +359,21 @@ chunker = ChunkerFactory.get_chunker(配置名)
 - **PostgreSQL**：元数据、权限、citations、Trace（JSONB）
 - **SQLite**：单文档表格旁路存储
 - **Arq + Redis**：异步任务队列，支持幂等
+
+先分清两类「队列」，别混着选型：
+
+| 类型 | 定位 | 解决的问题 | 代表产品 |
+| --- | --- | --- | --- |
+| 任务队列（Task Queue） | 专门管「把任务丢后台，Worker 慢慢执行」 | 异步任务调度、重试、死信、取消、并发控制 | ARQ、Celery、RQ |
+| 消息队列（MQ） | 专门管「服务 A 发消息，服务 B 收消息」 | 服务解耦、消息路由、发布订阅、流量削峰 | RabbitMQ、Kafka、RocketMQ |
+
+当前入库、解析、切块这类后台活，用 **ARQ + Redis** 就够：Python 同栈、调度清晰、幂等也好做。不是 RabbitMQ 不好，而是场景不对。出现下面情况，再考虑从 ARQ 迁到 RabbitMQ 才划算：
+
+1. **跨服务、跨语言调度**：不止 Python，还有 Java、Go 等也要投递任务
+2. **复杂路由**：要按任务类型、租户、优先级落到不同 Worker 队列
+3. **极高吞吐量**：单秒几万甚至几十万任务，Redis 扛不住
+4. **核心业务链路**：任务本身是交易级链路，对可用性、可靠性、消息不丢要求极高
+5. **发布订阅**：一个任务要多个消费者同时处理
 
 ### 知识库权限：三层 ACL + Security Trimming
 
