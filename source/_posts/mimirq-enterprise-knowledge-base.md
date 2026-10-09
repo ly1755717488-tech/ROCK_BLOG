@@ -1,7 +1,7 @@
 ---
 title: MimirQ 企业知识库搭建要点：把 RAG 做成可审计的数据流水线
 date: 2026-09-04 17:15:03
-updated: 2026-10-09 17:29:36
+updated: 2026-10-09 21:16:53
 tags:
   - RAG
   - 企业知识库
@@ -408,6 +408,8 @@ chunker = ChunkerFactory.get_chunker(配置名)
 - 辅助溯源：表格在原文档第几页、单元格合并信息、原格式标记等
 
 后续问「Q3 营收是多少」，不用重新解析 PDF，对这个 SQLite 跑 SQL 就能快速拿到结果，并且还能定位回原文位置。
+
+文档隔离、单文档查询、结构化表 + 向量放一起、离线可拷贝 → **sqlite-vec**
 
 **PostgreSQL 的 JSONB 性能够用。** 元数据、权限、citations、Trace 等半结构化内容存成 JSONB 后，可以对 JSON 内部任意字段建索引，查询速度接近普通结构化字段，灵活和性能兼顾。
 
