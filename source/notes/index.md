@@ -1,12 +1,31 @@
 ---
 title: 随笔
 date: 2026-09-02 15:30:00
-updated: 2026-10-06 22:39:39
+updated: 2026-10-11 16:48:50
 type: "notes"
 comments: false
 ---
 
 <div class="notes-board">
+
+<article class="note-card note-card--essay">
+  <header class="note-card__head">
+    <span class="note-card__badge">随笔</span>
+    <time class="note-card__time">2026-10-11</time>
+  </header>
+  <h2 class="note-card__title">Claude Code 的核心循环：TAOR</h2>
+  <div class="note-card__body">
+    <p>Claude Code 干活的主线是一个 Agent 闭环，缩写叫 TAOR：Think → Act → Observe → Repeat。四步一轮，转到达标为止。</p>
+    <h3>四步拆开看</h3>
+    <ol>
+      <li><strong>Think（思考）</strong>：模型拿到当前上下文，理解任务目标，规划下一步动作，从可用工具里挑一个（读文件、编辑代码、跑 shell、执行测试等），输出工具调用指令。</li>
+      <li><strong>Act（执行动作）</strong>：后端沙箱执行选中的工具，比如读取源码、改文件、跑单元测试。所有代码和命令都在隔离沙箱里跑。</li>
+      <li><strong>Observe（观测结果）</strong>：捕获工具返回的输出，代码内容、报错、stdout 日志，统统塞回上下文。</li>
+      <li><strong>Repeat（判断循环）</strong>：模型看着观测结果，判断任务做完没有。没做完就回到 Think 再走一轮；满足退出条件，收工。</li>
+    </ol>
+    <p>拆到底就是：模型只管想和决策，工具在沙箱里干活，结果回到上下文，再判断要不要继续。所谓 Agent 能力，大半是把这套循环的每一步做扎实。</p>
+  </div>
+</article>
 
 <article class="note-card note-card--essay">
   <header class="note-card__head">
