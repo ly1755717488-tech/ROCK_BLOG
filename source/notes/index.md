@@ -1,12 +1,56 @@
 ---
 title: 随笔
 date: 2026-09-02 15:30:00
-updated: 2026-10-12 17:28:50
+updated: 2026-10-12 21:28:20
 type: "notes"
 comments: false
 ---
 
 <div class="notes-board">
+
+<article class="note-card note-card--essay">
+  <header class="note-card__head">
+    <span class="note-card__badge">随笔</span>
+    <time class="note-card__time">2026-10-12</time>
+  </header>
+  <h2 class="note-card__title">PostgreSQL 物化视图：把查询结果存成一张表</h2>
+  <div class="note-card__body">
+    <h3>先分清两种视图</h3>
+    <p><strong>普通视图</strong>：像一个「查询快捷方式」。比如你经常要算「每个部门有多少人」，每次都得写很长的 SQL 去统计。普通视图就是把这段 SQL 存起来，你查视图时数据库才临时算一遍，把结果给你。它本身不存数据，只存公式。</p>
+    <p><strong>物化视图</strong>：它不是快捷方式，而是把查询结果实实在在存成一张真实的表格。相当于提前把「每个部门人数」算好，把结果表存在硬盘里；以后查它直接读存好的结果，不用再算一遍。</p>
+    <h3>特点</h3>
+    <p>数据不是实时更新的。部门来了新员工，物化视图里的数字不会自动变，得手动「刷新」一下，它才会重新算一遍并保存最新结果。</p>
+    <h3>什么时候用</h3>
+    <p>那些经常查、计算又很慢、且数据不用实时更新的统计报表，用它速度特别快，属于「用存储空间换查询时间」。</p>
+  </div>
+</article>
+
+<article class="note-card note-card--essay">
+  <header class="note-card__head">
+    <span class="note-card__badge">随笔</span>
+    <time class="note-card__time">2026-10-12</time>
+  </header>
+  <h2 class="note-card__title">消息队列怎么保证任务不丢、任务一致</h2>
+  <div class="note-card__body">
+    <p>从生产端、存储端、消费端三个环节全链路保障。</p>
+    <h3>生产端：保证消息成功入队</h3>
+    <ul>
+      <li><strong>生产端确认机制</strong>：发送后等待队列 ACK 响应，失败则重试；支持事务消息或半消息机制。</li>
+      <li><strong>落库兜底</strong>：先把任务写入数据库，再异步投递，定时扫描补偿未入队的消息。</li>
+    </ul>
+    <h3>存储端：保证消息持久化不丢</h3>
+    <ul>
+      <li>开启队列 / 中间件的持久化机制，如 Redis RDB + AOF、RabbitMQ 持久化、Kafka 副本机制。</li>
+      <li>集群部署、多副本冗余，避免单点故障导致数据丢失。</li>
+    </ul>
+    <h3>消费端：保证任务被成功执行</h3>
+    <ul>
+      <li><strong>手动 ACK</strong>：业务逻辑执行完成后再确认消费，失败则不 ACK，超时自动重入队。</li>
+      <li><strong>幂等设计</strong>：任务携带唯一 ID，消费前校验是否已执行，避免重复执行导致数据不一致。</li>
+      <li><strong>死信队列</strong>：多次重试失败的任务进入死信队列，人工兜底处理，不阻塞正常流程。</li>
+    </ul>
+  </div>
+</article>
 
 <article class="note-card note-card--essay">
   <header class="note-card__head">
