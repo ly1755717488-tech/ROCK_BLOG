@@ -1,12 +1,37 @@
 ---
 title: 随笔
 date: 2026-09-02 15:30:00
-updated: 2026-10-12 16:09:29
+updated: 2026-10-12 17:28:50
 type: "notes"
 comments: false
 ---
 
 <div class="notes-board">
+
+<article class="note-card note-card--essay">
+  <header class="note-card__head">
+    <span class="note-card__badge">随笔</span>
+    <time class="note-card__time">2026-10-12</time>
+  </header>
+  <h2 class="note-card__title">后端几个常见机制：原子操作、行级锁、幂等与验签</h2>
+  <div class="note-card__body">
+    <h3>Redis Lua 脚本：多步操作打包成原子操作</h3>
+    <p>需要把多步 Redis 操作打包成「原子操作」、中间不能被别的请求打断时，就用 Lua 脚本。Lua 是一种轻量小巧的脚本语言，常被嵌入到其他软件里运行。放在 Redis 里用的核心价值就是原子性：一整段脚本一口气执行完，中间不会被其他命令打断，要么全成功，要么全失败。</p>
+    <h3>MySQL 行级锁</h3>
+    <p>行级锁是 MySQL 里的细粒度锁，只锁住你当前要修改的那一行数据，其他行完全不受影响。</p>
+    <h3>幂等怎么实现</h3>
+    <p>最通用的是「唯一 ID + 去重表」：给每次操作生成一个全局唯一流水号（比如支付订单号），操作前先查去重表，已存在就直接返回成功，不存在则执行业务并写入去重表。支付、下单这类所有新增操作都适用。</p>
+    <h3>支付回调验签流程</h3>
+    <p>验签是支付安全的核心，用来防止伪造回调。</p>
+    <ol>
+      <li><strong>收报文</strong>：接收微信支付回调的全部参数和签名字段。</li>
+      <li><strong>排参数</strong>：剔除签名字段，剩余参数按名称 ASCII 码从小到大排序。</li>
+      <li><strong>拼字符串</strong>：排序后按键值拼接，末尾拼上商户密钥。</li>
+      <li><strong>算签名</strong>：用约定算法（MD5 / HMAC-SHA256）计算本地签名。</li>
+      <li><strong>双校验</strong>：先比对签名是否一致，再校验订单号、金额和本地一致，全部通过才处理业务。</li>
+    </ol>
+  </div>
+</article>
 
 <article class="note-card note-card--essay">
   <header class="note-card__head">
