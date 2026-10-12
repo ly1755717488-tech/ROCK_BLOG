@@ -1,12 +1,53 @@
 ---
 title: 随笔
 date: 2026-09-02 15:30:00
-updated: 2026-10-12 21:28:20
+updated: 2026-10-12 21:51:16
 type: "notes"
 comments: false
 ---
 
 <div class="notes-board">
+
+<article class="note-card note-card--essay">
+  <header class="note-card__head">
+    <span class="note-card__badge">随笔</span>
+    <time class="note-card__time">2026-10-12</time>
+  </header>
+  <h2 class="note-card__title">Harness：给大模型套上的那根缰绳</h2>
+  <div class="note-card__body">
+    <p>这里说的是 Agent 大模型方向的 Harness Engineering，不是 DevOps 那个 Harness 平台。一句话公式：<strong>Agent = Model + Harness</strong>。</p>
+    <p>Harness 直译是马具、缰绳。大模型本身是一匹能力很强但不受控的马，Harness 就是包裹在大模型之外、让 Agent 稳定安全可控运行的整套运行时基础设施，不属于模型本身。</p>
+    <h3>包含的核心组件</h3>
+    <ol>
+      <li><strong>状态管理</strong>：保存对话上下文、任务状态、子任务进度，LangGraph 里的 State 就是 Harness 的一部分。</li>
+      <li><strong>工具调度层</strong>：工具调用、参数校验、工具执行、结果解析，控制模型能调用哪些工具。</li>
+      <li><strong>Guardrails（护栏）</strong>：输入输出校验，过滤违规内容、做权限控制，限制模型不能做的操作（禁止删库、高危操作），Allow / Deny / Ask 策略。</li>
+      <li><strong>上下文管理 Resolver</strong>：按需加载记忆、RAG 上下文，做上下文压缩，防止 prompt 超长溢出。</li>
+      <li><strong>Hook 钩子</strong>：在模型调用前 / 调用后拦截，做日志、埋点、校验、限流、缓存。</li>
+      <li><strong>Agent 循环控制</strong>：限制最大迭代次数，防止无限循环，并判断终止条件。</li>
+      <li><strong>观测与成本控制</strong>：Token 统计、耗时监控、重试策略、异常兜底。</li>
+    </ol>
+    <p>核心目标是约束大模型，解决 Agent 落地的痛点：无限循环、上下文爆炸、越权操作、不可控输出、成本不可控。</p>
+    <p>通俗理解：模型负责思考推理，Harness 负责管控、调度、安全、资源、流程，给模型套上缰绳。</p>
+  </div>
+</article>
+
+<article class="note-card note-card--essay">
+  <header class="note-card__head">
+    <span class="note-card__badge">随笔</span>
+    <time class="note-card__time">2026-10-12</time>
+  </header>
+  <h2 class="note-card__title">混合检索都分组排序去重了，为什么还要再精排</h2>
+  <div class="note-card__body">
+    <ol>
+      <li><strong>召回阶段追求高召回率，牺牲精度</strong>：BM25 和向量检索是粗筛，目标是尽量把相关文档捞出来，宁可多召回不能漏，允许混入一些相关性弱的文档。粗排打分逻辑比较简单，对语义的深层理解不足。</li>
+      <li><strong>粗排是两个不同的分数体系</strong>：向量相似度和 BM25 关键词分数是两套独立逻辑，融合只能做简单加权或 RRF，很难精细判断语义相关性。</li>
+      <li><strong>Re-rank 模型（交叉编码器 Cross-Encoder）能力更强</strong>：精排的输入是「问题 + 单条文档」成对输入，深度判断文档和用户问题的真实语义匹配程度，比 Embedding 模型理解更强，能精准区分「看起来像、但无关」的文档。</li>
+      <li><strong>资源成本可控</strong>：召回阶段一次性召回几十条，数量少；精排只对这几十条跑，开销可控，不用全库计算。</li>
+    </ol>
+    <p>一句话：粗召回负责「不漏掉相关文档」，Re-rank 精排负责「挑出最相关的文档」，提升最终答案质量。</p>
+  </div>
+</article>
 
 <article class="note-card note-card--essay">
   <header class="note-card__head">
