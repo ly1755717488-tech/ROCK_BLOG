@@ -1,12 +1,37 @@
 ---
 title: 随笔
 date: 2026-09-02 15:30:00
-updated: 2026-10-12 15:43:55
+updated: 2026-10-12 16:09:29
 type: "notes"
 comments: false
 ---
 
 <div class="notes-board">
+
+<article class="note-card note-card--essay">
+  <header class="note-card__head">
+    <span class="note-card__badge">随笔</span>
+    <time class="note-card__time">2026-10-12</time>
+  </header>
+  <h2 class="note-card__title">AI 输出如何保证结构化，以及为什么用 Markdown 而不是 JSON</h2>
+  <div class="note-card__body">
+    <h3>如何保证结构化</h3>
+    <ol>
+      <li><strong>Prompt 强约束</strong>：系统 Prompt 里明确规定输出格式、结构、层级，要求必须按 Markdown 语法输出，禁止自由格式。</li>
+      <li><strong>输出校验</strong>：输出后做格式校验，检查标题、列表、表格等结构是否完整，不符合就自动重生成。</li>
+      <li><strong>结构化解析</strong>：前端用 Markdown 解析器统一渲染，保证不同模型、不同场景的展示样式一致。</li>
+      <li><strong>关键信息抽取</strong>：需要业务字段的场景，额外加一个信息抽取环节，把关键信息提取成结构化 JSON，供业务系统流转。</li>
+    </ol>
+    <h3>为什么选 Markdown 不选 JSON</h3>
+    <ol>
+      <li><strong>大模型友好</strong>：Markdown 是自然语言的结构化，大模型生成准确率远高于 JSON，不容易出现语法错误、字段缺失。</li>
+      <li><strong>可读性强</strong>：生成过程中可预览、可调试，人工审核成本低；JSON 的嵌套结构肉眼难读。</li>
+      <li><strong>渲染兼容</strong>：前端直接渲染成富文本，支持标题、列表、表格、代码块；JSON 要自定义映射才能渲染。</li>
+      <li><strong>容错性高</strong>：Markdown 的小瑕疵不影响阅读；JSON 多一个逗号、少一个引号就解析失败。</li>
+      <li><strong>适用场景广</strong>：问答、文档、教程这类内容天然适合 Markdown；只有纯机器对接的接口才用 JSON。</li>
+    </ol>
+  </div>
+</article>
 
 <article class="note-card note-card--essay">
   <header class="note-card__head">
