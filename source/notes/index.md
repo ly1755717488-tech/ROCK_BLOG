@@ -1,12 +1,35 @@
 ---
 title: 随笔
 date: 2026-09-02 15:30:00
-updated: 2026-10-11 16:48:50
+updated: 2026-10-12 14:57:06
 type: "notes"
 comments: false
 ---
 
 <div class="notes-board">
+
+<article class="note-card note-card--essay">
+  <header class="note-card__head">
+    <span class="note-card__badge">随笔</span>
+    <time class="note-card__time">2026-10-12</time>
+  </header>
+  <h2 class="note-card__title">SSE 与 WebSocket：单向推和双向通</h2>
+  <div class="note-card__body">
+    <h3>SSE（Server-Sent Events）</h3>
+    <ul>
+      <li>底层是普通 HTTP 长连接，单向通信：只能服务器推数据给客户端；客户端要发消息得单独再发一个 HTTP 请求。</li>
+      <li>浏览器自带断线自动重连，只能传文本。</li>
+      <li>适合：AI 流式输出、消息通知、行情推送——只需要后端不断推、客户端不用频繁发消息的场景。</li>
+    </ul>
+    <h3>WebSocket</h3>
+    <ul>
+      <li>独立协议，由 HTTP 握手升级而来；全双工双向通信，客户端和服务端可以随时互相发消息。</li>
+      <li>支持文本和二进制数据；断线重连、心跳检测要自己手写。</li>
+      <li>适合：在线聊天、协同文档、在线游戏——双向高频实时交互的场景。</li>
+    </ul>
+    <p>一句话区分：只需要服务器单向推消息用 SSE；双方都要随时互相发消息，用 WebSocket。</p>
+  </div>
+</article>
 
 <article class="note-card note-card--essay">
   <header class="note-card__head">
