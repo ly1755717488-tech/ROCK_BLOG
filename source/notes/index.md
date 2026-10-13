@@ -1,7 +1,7 @@
 ---
 title: 随笔
 date: 2026-09-02 15:30:00
-updated: 2026-10-12 21:51:16
+updated: 2026-10-13 22:33:42
 type: "notes"
 comments: false
 ---
@@ -175,6 +175,20 @@ comments: false
       <li>兜底：HTTP 长轮询，实时性稍差，但兼容性最强，绝大多数网络环境都能用。</li>
       <li>最终兜底：都不行就提示网络异常，并给一个手动重试按钮。</li>
     </ol>
+    <h3>消息边界：到底谁负责切分</h3>
+    <p>SSE 常被说成「有边界」，但那个 `\n\n` 只是字节流里的几个字符，不是协议层面给的边界。往下几层看就清楚了：</p>
+    <table>
+      <thead>
+        <tr><th>层</th><th>边界</th><th>应用要不要自己切</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>TCP</td><td>无，只有有序字节流</td><td>必须</td></tr>
+        <tr><td>HTTP/2 DATA 帧</td><td>有帧边界，但 body 对应用仍是字节流</td><td>必须</td></tr>
+        <tr><td><strong>SSE</strong></td><td>自定义 <code>\n\n</code> 分界——但它只是字节流里的字符</td><td>必须</td></tr>
+        <tr><td>WebSocket</td><td>有真正的帧 / 消息边界，整条消息交付</td><td>不用</td></tr>
+      </tbody>
+    </table>
+    <p>记三句：SSE 是「话怎么说」，HTTP 是「信封怎么写」，TCP 是「快递怎么把东西可靠送到」。三层各管一段，谁也不替谁划消息边界。</p>
   </div>
 </article>
 
