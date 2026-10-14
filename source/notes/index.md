@@ -1,12 +1,30 @@
 ---
 title: 随笔
 date: 2026-09-02 15:30:00
-updated: 2026-10-13 22:33:42
+updated: 2026-10-14 15:12:50
 type: "notes"
 comments: false
 ---
 
 <div class="notes-board">
+
+<article class="note-card note-card--essay">
+  <header class="note-card__head">
+    <span class="note-card__badge">随笔</span>
+    <time class="note-card__time">2026-10-14</time>
+  </header>
+  <h2 class="note-card__title">支付后积分 / 虚拟产品怎么保证到账</h2>
+  <div class="note-card__body">
+    <p>核心思路是最终一致性：状态机 + 消息队列 + 幂等 + 补偿重试。</p>
+    <ol>
+      <li><strong>回调只落库</strong>：收到微信支付回调、校验成功后，先在数据库事务里把订单更新为已支付，并在同一事务内发出积分发放消息（MQ）。</li>
+      <li><strong>异步发货 + 幂等</strong>：消费 MQ 再执行发积分 / 发虚拟商品；消费端做好幂等，防止重复回调导致重复发放。</li>
+      <li><strong>失败补偿</strong>：消息消费失败进死信队列，由定时任务补偿重试。</li>
+      <li><strong>每日对账</strong>：定时对账任务比对本地订单和微信账单，查漏补缺，补发缺失的积分。</li>
+    </ol>
+    <p>关键约束：不能在回调接口里同步执行复杂业务，超时会导致微信反复回调。</p>
+  </div>
+</article>
 
 <article class="note-card note-card--essay">
   <header class="note-card__head">
