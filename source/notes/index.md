@@ -1,12 +1,38 @@
 ---
 title: 随笔
 date: 2026-09-02 15:30:00
-updated: 2026-10-14 15:12:50
+updated: 2026-10-15 09:38:34
 type: "notes"
 comments: false
 ---
 
 <div class="notes-board">
+
+<article class="note-card note-card--essay">
+  <header class="note-card__head">
+    <span class="note-card__badge">随笔</span>
+    <time class="note-card__time">2026-10-15</time>
+  </header>
+  <h2 class="note-card__title">模型体感：Astra Pro 与 Opus 5.5 Max，还有抽卡</h2>
+  <div class="note-card__body">
+    <p>这是别人的经验：最近在打算法比赛，聊到模型时谈到——Astra Pro 和 Opus 5.5 Max 属于同一档，但前者更擅长突破，后者更擅长分析。</p>
+    <p>用下来的一点体会：给 Astra Pro 的提示词越少越好，给多了反而限制它的发挥。其次，本质上是抽卡——可能抽 10 次，才有 1 次的 Pro 特别聪明。</p>
+  </div>
+</article>
+
+<article class="note-card note-card--essay">
+  <header class="note-card__head">
+    <span class="note-card__badge">随笔</span>
+    <time class="note-card__time">2026-10-15</time>
+  </header>
+  <h2 class="note-card__title">Claude 拆任务、Codex 写代码：一条 shell 编排链路</h2>
+  <div class="note-card__body">
+    <p>GPT 的代码审查能力暂时还没有 Claude 强，所以可以把两者拼起来用：让 Claude 负责想和拆，让 Codex 负责写。</p>
+    <h3>架构链路</h3>
+    <p>用户需求 → Claude 思考、拆解任务 → 输出 shell 指令 → 本地执行 shell → 调用 Codex → Codex 生成代码</p>
+    <p>串起来的关键是中间那层 shell：Claude 的产出不是直接代码，而是一串可执行的指令，由本地 shell 落下去跑，再把写码这一步交给 Codex。规划和生成各用各自更擅长的模型，链路本身走本地命令，衔接清楚也好排查。</p>
+  </div>
+</article>
 
 <article class="note-card note-card--essay">
   <header class="note-card__head">
