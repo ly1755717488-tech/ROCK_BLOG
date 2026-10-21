@@ -1,7 +1,7 @@
 ---
 title: 随笔
 date: 2026-09-02 15:30:00
-updated: 2026-10-21 16:33:23
+updated: 2026-10-21 17:05:48
 type: "notes"
 comments: false
 ---
@@ -13,29 +13,13 @@ comments: false
     <span class="note-card__badge">随笔</span>
     <time class="note-card__time">2026-10-21</time>
   </header>
-  <h2 class="note-card__title">选 Go 的 8 个理由，以及 Go 的几个真相</h2>
+  <h2 class="note-card__title">MIT 学习论</h2>
   <div class="note-card__body">
-    <h3>8 个核心理由</h3>
-    <ol>
-      <li><strong>单文件分发</strong>：前端打进程序里，只出一个 exe，用户双击就能跑，不用装 Go / Python / Node。</li>
-      <li><strong>一次编译多平台</strong>：一套代码编出 Windows、macOS、Linux，做自托管工具很省事。</li>
-      <li><strong>标准库自带 Web 服务</strong>：没上 Gin，直接用 `net/http` 写接口、视频流、文件传输，大文件和流媒体都够用。</li>
-      <li><strong>天生适合多任务并行</strong>：下载、刷剧库、补元数据、合并视频、预缓存、定时同步、搜索可以同时跑。</li>
-      <li><strong>内存占用低</strong>：编译成原生机器码，长期挂在低配小主机或 VPS 上也扛得住。</li>
-      <li><strong>调 FFmpeg 简单</strong>：直接拉子进程，读进度、设超时、随时取消，不用复杂绑定。</li>
-      <li><strong>依赖极少</strong>：几乎只用标准库，第三方包就一个，升级踩坑和供应链风险都小。</li>
-      <li><strong>标准库够用</strong>：内嵌前端、上下文控制、加密、JSON、压缩、调外部程序、安全写文件全内置；项目不需要 ORM，生态短板感受不到。</li>
-    </ol>
-    <h3>Go 的真相</h3>
-    <ul>
-      <li>goroutine 是轻量协程，能真正吃满多核；Python 受 GIL 限制，Node 单线程，大量后台并发会吃力。</li>
-      <li>但不是不用锁：多个 goroutine 读写同一块共享数据，照样有数据竞争，`sync.Mutex` 该加还得加。</li>
-      <li>官方思路是「不要通过共享内存来通信，而是通过通信来共享内存」，channel 能减少手动加锁，但底层自己也封装了锁。</li>
-    </ul>
-    <p>channel 和 MQ 别混：channel 只在进程内、零持久化、极轻量，程序一退未处理的任务就没了；MQ 是跨进程的外部中间件，有网络 IO、磁盘持久化和死信、重试、追踪、分区这些能力。</p>
-    <h3>还有两点</h3>
-    <p>标准库设计统一、跨平台行为一致，`net/http`、JSON、加密、IO、并发开箱即用；加上 Go 是静态类型语言，编译期就做类型校验，运行前就能发现类型错误，大型后端项目更好维护。</p>
-    <p>一句话：这个项目要的是「单文件、低占用、能并行、少依赖」，Go 正好全都对上。</p>
+    <p><strong>想快速理解一个新领域？</strong> 先喂够素材，然后问：这个领域的专家怎么思考？他们在哪些问题上有分歧？怎么区分真懂和假懂？</p>
+    <p><strong>想评估一个新产品/新趋势？</strong> 同样的逻辑：核心优势是什么？业内争议在哪？什么问题能区分出真正理解这个产品的人？</p>
+    <p><strong>想学一项新技能？</strong> 别问"怎么学 Python"，问"优秀的 Python 开发者和普通开发者的思维方式有什么区别？他们在哪些实践上有分歧？"</p>
+    <p>我自己最近在研究一个新话题的时候试了一下，先问心智模型再问分歧点，确实比直接问"帮我总结"拿到的东西有用得多。你一下子就知道这个领域的"骨架"在哪，而不是拿到一堆零散的知识碎片。</p>
+    <p><img src="https://mmbiz.qpic.cn/mmbiz_jpg/iafyQTicPqUtNh4mYj2CA0En5GRLCetBsWR2W1ysjzzAlQvedkPuboYcW2gJoIPayOVbtxI2w0d6qZhohQlyRqwS0j7acc3jKe3LI0F1gPXHc/640?from=appmsg&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1#imgIndex=7" alt="06-illustration-universal-template.jpg"></p>
   </div>
 </article>
 
