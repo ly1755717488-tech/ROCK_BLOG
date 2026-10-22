@@ -19,7 +19,7 @@ comments: false
     <p><strong>想评估一个新产品/新趋势？</strong> 同样的逻辑：核心优势是什么？业内争议在哪？什么问题能区分出真正理解这个产品的人？</p>
     <p><strong>想学一项新技能？</strong> 别问"怎么学 Python"，问"优秀的 Python 开发者和普通开发者的思维方式有什么区别？他们在哪些实践上有分歧？"</p>
     <p>我自己最近在研究一个新话题的时候试了一下，先问心智模型再问分歧点，确实比直接问"帮我总结"拿到的东西有用得多。你一下子就知道这个领域的"骨架"在哪，而不是拿到一堆零散的知识碎片。</p>
-    <p><img src="https://mmbiz.qpic.cn/mmbiz_jpg/iafyQTicPqUtNh4mYj2CA0En5GRLCetBsWR2W1ysjzzAlQvedkPuboYcW2gJoIPayOVbtxI2w0d6qZhohQlyRqwS0j7acc3jKe3LI0F1gPXHc/640?from=appmsg&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1#imgIndex=7" alt="06-illustration-universal-template.jpg"></p>
+    <p><img src="/img/notes/mit-learning-framework.png" alt="心智模型、分歧点、深度测试三张卡片"></p>
   </div>
 </article>
 
