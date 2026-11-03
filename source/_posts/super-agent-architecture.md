@@ -1,7 +1,7 @@
 ---
-title: 通了个宵，终于把 Super-Agent 架构玩明白了
+title: Super-Agent架构分析
 date: 2026-11-03 20:12:45
-updated: 2026-11-03 20:12:45
+updated: 2026-11-03 21:35:34
 tags:
   - Super-Agent
   - Agent 架构
@@ -17,7 +17,7 @@ keywords: Super-Agent,DeepSeek Harness,Router,Worker,事件驱动,Thread,Inline,
 ---
 
 {% note info %}
-本文整理自 LINUX DO 社区「通了个宵，终于把 Super-Agent 架构玩明白了。」一文，围绕 DeepSeek Harness 团队的《Super-agent 设计探索：迈向更自主的 Agent 系统》展开。原文配图未能随文字一并保存，正文按原文顺序保留。
+本文整理自 LINUX DO 社区「通了个宵，终于把 Super-Agent 架构玩明白了。」一文，围绕 DeepSeek Harness 团队的《Super-agent 设计探索：迈向更自主的 Agent 系统》展开，正文按原文顺序保留。
 {% endnote %}
 
 前天，DeepSeek Harness 团队发了一篇新文章，《Super-agent 设计探索：迈向更自主的 Agent 系统》。
