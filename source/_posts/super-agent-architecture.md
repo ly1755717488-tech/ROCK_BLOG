@@ -30,7 +30,9 @@ DeepSeek Harness 团队（以下统称为 DSH 团队）首先解释了一下，�
 
 同样的随着模型能力的增强，今年早期的 OpenClaw 这类工具演变成了现在新的业态：Personal Agent。
 
-我看到 DeepSeek 团队一直没有做 dsh bot，目前流传出来的 bot 都是社区开发的。
+我看到 DeepSeek 团队一直没有做 dsh bot，目前流传出来的 bot 都是社区开发的，比如这个。
+
+![DS Bot 里的 Chief 和它拉起来的 Writer、Coder](/img/super-agent/01-dsbot-chat.png)
 
 Personal Agent 我之前也聊过，其实没有太多创新性的变革，无非是做的更好用了些，延迟低。
 
@@ -50,15 +52,21 @@ Personal Agent 我之前也聊过，其实没有太多创新性的变革，无�
 
 它们玩的是单 Agent + Main Loop，把适合合并的 subagent 的业务流程提炼为 Skills，系统读写交给 Tools / MCP。需要保留的 subagent，仍然可以通过工具由主 Agent 调用。
 
+![Claude 关于把 subagent 收进主循环的那篇文章](/img/super-agent/02-claude-agents-post.png)
+
 Claude 那篇主要讨论一项任务内部，多个专家 Agent 反复交接会不会丢失信息、增加延迟。DSH 这篇主要讨论一组任务如何长期并行推进，同时让人少操心。前者精简任务内部的推理结构，后者组织跨任务的执行。
 
 DSH 团队公布了一种架构方案，这种架构方案可以实现让开发者在 IM 终端与 GitHub 之间连续推进，并且还会观察群组中的反馈，遇到相关联性的问题，先评估定位原因再主动修复。
+
+![IM 与 GitHub 之间连续推进的一串 Thread](/img/super-agent/03-im-github-thread.gif)
 
 这种 Super-Agent 的架构具有**连续、高效、主动、持久**的特点。
 
 这让我想起来 Magpie 的作者 yetone 此前也公布了一下自己的工作流。
 
 他的玩法就是三个 /loop 循环，一个盯 Github 判断要不要修复、一个盯 x 有没有反馈、一个盯代码要不要铲屎。
+
+![yetone 用三个 /loop 并行推进](/img/super-agent/04-yetone-loops.png)
 
 原来 /loop 还能这么玩，想到我此前用 /loop 做迭代跑了 72 小时结果产出一坨 shit 是为啥了。
 
@@ -69,6 +77,8 @@ DSH 团队公布了一种架构方案，这种架构方案可以实现让开发�
 比如 Session 共享，缓存，CPU 中的 fork 线程和子线程，Worktree，Filesystem。
 
 他们提出了一种架构模式。
+
+![Super-agent 的五个模块](/img/super-agent/05-five-modules.jpg)
 
 这个架构主要分为五块内容。
 
@@ -90,7 +100,9 @@ DSH 团队公布了一种架构方案，这种架构方案可以实现让开发�
 
 所以如何权衡非常关键。
 
-基于此，DSH 团队提出了 Router 和 Worker 层的机制，Router 层负责与人交互和协调工作，Worker 层负责执行具体的任务。
+基于此，DSH 团队提出了 Router 和 Worker 层的机制，Router 层负责与人交互和协调工作，Worker 层负责执行具体的任务，这个架构图如下。
+
+![Router 与 Worker 的双层架构](/img/super-agent/06-router-worker.png)
 
 在 Router 和 Worker 的双层架构里，系统会在底层上接管上下文管理和并发，从而从用户侧淡化 Session，让用户始终看到的是一个 Super-agent。
 
@@ -107,6 +119,10 @@ Worker 层负责执行具体的任务，各个 Worker 彼此上下文隔离，�
 多任务同时干活时，各个 Worker 独立推进任务，Woker 之间不需要相互通信。
 
 跟 Router 的架构是一样的，Worker 也是多节点，并且一个 Worker 在执行复杂任务时，可以 fork subagent，一个 Worker 本身可以成为一个 Agent Teams。
+
+下面这幅图很形象的描述了 Router 和 Worker 的职责。
+
+![Router 与 Worker 的职责](/img/super-agent/07-roles.png)
 
 这个架构相当于是把 Session 这一侧淡化了，这个 Super-agent 侧既是用户侧的交互、又是底层侧的入口。
 
@@ -138,17 +154,23 @@ Worker 层负责执行具体的任务，各个 Worker 彼此上下文隔离，�
 
 过滤完了之后按理说就应该到我们上面讲到的 Router 层转发了，如果有大量的请求，会导致 Router 层负载很高，于是 DSH 团队在这块做了优化，将 Fast / Slow Path 过滤之后的消息直接路由了，**全局 Router 层仅负责新任务的冷启动与跨任务协调**，而过滤之后的消息直接路由给 Worker 了，无需再经过 Router。
 
+![两级过滤与直通](/img/super-agent/08-two-stage-filter.gif)
+
 我把它做成了一个小动画。大部分消息其实在第一层就没了，根本轮不到模型去判断，剩下的才会进语义层。
 
 DSH 团队把具备连续 / 完整上下文的 request 称为 **Thread**，比如 GitHub Pull Request，同一邮件下的往来记录，同一 IM 话题下的消息。
 
 一条 Trigger 是一个点，一串相关的 Trigger 连成一条线，这条线就是 Thread。
 
-三个 Thread 分别来自 IM、PR 和邮件。它们可能是同一件事的不同侧面，也可能是三条并行的任务；关键不在于它们是不是一回事，而在于一个 Worker 可以同时订阅好几条。
+![Thread：一串相关的 Trigger](/img/super-agent/09-thread.png)
+
+图里三个 Thread 分别来自 IM、PR 和邮件。它们可能是同一件事的不同侧面，也可能是三条并行的任务；关键不在于它们是不是一回事，而在于一个 Worker 可以同时订阅好几条。
 
 Thread 有了，接下来的问题是：后面再来消息，该发给谁。
 
-这里其实说的是两条路。
+![订阅与直通](/img/super-agent/10-subscribe-direct.png)
+
+这张图说的是两条路。
 
 第一条是 Slow Path：一个 Thread 刚出现，还没有 Worker 认领，Router 判断这件事归谁管，然后建一个 Worker，顺便让它订阅这个 Thread。
 
@@ -164,6 +186,8 @@ Inline 是指将近期很可能用到的信息直接内联进当前上下文窗�
 
 我把它理解成一个工作台：手边放常用的，剩下的放档案柜。
 
+![Inline / Spill](/img/super-agent/11-inline-spill.png)
+
 看到 Inline / Spill，我第一反应就是操作系统的内存页换入换出。
 
 像的地方是思路：窗口就那么大，常用内存页换进来，不常用的换出去，只在窗口里维护一个页码对照。
@@ -174,6 +198,8 @@ Inline 是指将近期很可能用到的信息直接内联进当前上下文窗�
 
 上面这套 Inline / Spill，还有一个挺有意思的东西，叫**链式召回（Chain of Recall）**。
 
+![链式召回](/img/super-agent/12-chain-of-recall.png)
+
 系统给 Trigger、Thread、Worker 这些对象都编了 ID，注入的时候顺手把下一跳的 ID 带上。于是这些对象在底层就连成了一张引用图。
 
 假设你在群里问一句：昨天那个问题修得怎么样了？Router 手上只有这条消息，但消息上挂着 Thread 的 ID。顺着 Thread 查，能找到正在处理它的 Worker；Worker 的状态里又挂着那个 PR 的 Thread ID；再查过去，就查到了修改记录。
@@ -181,6 +207,8 @@ Inline 是指将近期很可能用到的信息直接内联进当前上下文窗�
 这个链式召回的玩法它靠的不是一个巨大的记忆库，而是一张能实时渲染的地图。
 
 借鉴计算机系统中的**投机执行（Speculative Execution）**思想，Agent 可以在还不确定结果是否会被采用时，根据环境信号在后台提前尝试，通过消耗额外的后台算力来减少人类的等待与介入成本。结果有价值就交付，没有价值就丢弃。
+
+![投机执行：群里还在讨论，PR 已经好了](/img/super-agent/13-speculative.gif)
 
 ## 多信道交互
 
@@ -191,6 +219,8 @@ Inline 是指将近期很可能用到的信息直接内联进当前上下文窗�
 这个估计最近蹬过细糠的小伙伴们都知道。
 
 传统的 ReAct 是一问一答，你问了一个问题只能等到回答完毕才能问一下一个，这种是阻塞式的。现在变成全双工了，是异步 ReAct Loop 了。
+
+![同步 ReAct 与异步 ReAct](/img/super-agent/14-sync-async-react.gif)
 
 左边是老的 ReAct：一个 run() 发出去，整个循环就卡住等结果。你这时候再发消息，它也只能阻塞排队。
 
@@ -224,6 +254,8 @@ DSH 用了两部来解耦。
 
 不过这里也有个前提：云端和端侧得互相信任。云端一旦被攻破，它连着的所有设备都危险。
 
+![计算、状态与环境的分离](/img/super-agent/15-compute-storage.png)
+
 ## Watchdog
 
 要实现持久在线，除了上面聊到的存算分离，还要能从异常状态中恢复。
@@ -238,6 +270,8 @@ Watchdog 是定时消息驱动的，它的作用就是及时介入发现异常�
 
 Watchdog 的定位也是一个 Agent Session，开发者可以向它询问错误原因、及时调整。
 
+![Watchdog 的外部控制回路](/img/super-agent/16-watchdog.png)
+
 ## 写在最后
 
 最后想说一下，我看到这块的时候其实非常激动。
@@ -245,6 +279,8 @@ Watchdog 的定位也是一个 Agent Session，开发者可以向它询问错误
 现在市面上很多大模型都在玩概念炒作，没两天熄火了，完事儿之后又炒下一轮。
 
 所以当一个正经搞过底层的人看到 DSH 团队说的这些话的时候，我觉得有一种相见恨晚的感觉。
+
+![结语：把经典工程思想用到 Agent 系统上](/img/super-agent/17-epilogue.png)
 
 终于有正经团队能够从底层动刀子了，而不是天天玩一堆 tools 和 skills，再怎么优化拿到 Transformers 的注意力机制上也是抽卡。
 
