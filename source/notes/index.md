@@ -1,12 +1,30 @@
 ---
 title: 随笔
 date: 2026-09-02 15:30:00
-updated: 2026-10-21 17:05:48
+updated: 2026-11-04 11:02:11
 type: "notes"
 comments: false
 ---
 
 <div class="notes-board">
+
+<article class="note-card note-card--essay">
+  <header class="note-card__head">
+    <span class="note-card__badge">随笔</span>
+    <time class="note-card__time">2026-11-04</time>
+  </header>
+  <h2 class="note-card__title">AI 辅助编码效率到底取决于什么</h2>
+  <div class="note-card__body">
+    <p><strong>AI 辅助编码效率 ≈ 模型能力 × 软件工程能力 × 架构能力 × 基础设施建设能力</strong></p>
+    <p>是乘法，不是加法。任何一项接近零，整体就被拖到零：模型再强，代码没人会验收，也落不成产品；工程能力再扎实，基础设施跑不动，也提不了速。</p>
+    <div class="note-card__figure"><img src="/img/notes/ai-coding-efficiency-formula.png" alt="软件工程能力与基础设施建设能力的分工"></div>
+    <h3>软件工程能力：写好软件</h3>
+    <p>关注代码、设计、质量、测试、交付。对应的问题是：AI 生成的代码，能不能成为高质量的软件？</p>
+    <h3>基础设施建设能力：支撑生产</h3>
+    <p>关注环境、工具、知识、算力、安全、监控。对应的问题是：能不能让 AI 持续、高效、安全地完成这些工作？</p>
+    <p>所以提升 AI 编码效率，不只是等一个更强的模型。把自己这侧的工程、架构、基建补齐，乘数才会真正变大。</p>
+  </div>
+</article>
 
 <article class="note-card note-card--essay">
   <header class="note-card__head">

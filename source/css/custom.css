@@ -393,6 +393,15 @@
   line-height: 1.85 !important;
 }
 
+.note-card__body img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 6px 0 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(60, 55, 45, 0.08);
+}
+
 .note-card__body h3 {
   margin: 16px 0 8px !important;
   color: #2f2d29 !important;
