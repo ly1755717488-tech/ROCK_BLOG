@@ -1,12 +1,24 @@
 ---
 title: 随笔
 date: 2026-09-02 15:30:00
-updated: 2026-11-04 11:02:11
+updated: 2026-11-10 10:06:41
 type: "notes"
 comments: false
 ---
 
 <div class="notes-board">
+
+<article class="note-card note-card--memo">
+  <header class="note-card__head">
+    <span class="note-card__badge">小记</span>
+    <time class="note-card__time">2026-11-10</time>
+  </header>
+  <h2 class="note-card__title">软件测试的验收闭环</h2>
+  <div class="note-card__body">
+    <p class="note-card__lead">软件测试环节：处理完了帮我验收审查 → 修复 → 评分，9.8/10 以上通过。</p>
+    <p>不通过就循环：换一个角度，然后继续验收审查 → 修复 → 评分。</p>
+  </div>
+</article>
 
 <article class="note-card note-card--essay">
   <header class="note-card__head">
