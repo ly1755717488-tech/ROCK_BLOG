@@ -1,7 +1,7 @@
 ---
 title: 从零搭建 AI 猫猫协作系统：Cat Café 项目复盘
 date: 2026-11-09 17:44:41
-updated: 2026-11-09 17:44:41
+updated: 2026-11-11 17:05:32
 tags:
   - 多 Agent
   - Agent 协作
@@ -9,12 +9,13 @@ tags:
   - Claude Code
   - Codex
   - 项目复盘
+  - dsh
 categories:
   - 教程
 cover: /img/cover-cat-cafe-ai-agents.jpg
 top_img: false
 description: 三只 AI 猫猫（Claude、Codex、Gemini）用 CLI 互相 @，从选型、元规则、消息路由到上下文工程，一份真实项目的完整复盘。
-keywords: Cat Café,多 Agent,Claude Code,Codex,Gemini,上下文工程,Agent 协作,元规则,Worklist
+keywords: Cat Café,多 Agent,Claude Code,Codex,Gemini,上下文工程,Agent 协作,元规则,Worklist,dsh,插件开发
 ---
 
 这篇复盘来自一个真实跑起来的项目：三只不同模型的 AI 猫猫，用 CLI 互相 @，从写第一个功能到把一套协作规则沉淀下来。中间踩过的坑、推翻过的方案、最后为什么选现在这条路，都写在这里。
@@ -312,6 +313,30 @@ BEFORE 做某事:
 ```
 
 写成 Skill 有三个好处：可复用，定义一次所有对话都生效；可强制执行，触发词匹配后自动检查；可迭代，发现新问题就更新。
+
+## 延伸：从 Skill 到 dsh 插件
+
+Cat Café 最后把元规则收成了 Skill。那再往前一步：Skill 能不能直接变成插件？
+
+有人把这条路写成了模板：[liangdabiao/dsh-plugin-developer-skill](https://github.com/liangdabiao/dsh-plugin-developer-skill)。仓库带着 Agent 从 0 到 1 走完 dsh 插件的开发、构建、安装和测试，内容基于 dsh 0.1.1-rc.2 和 dsh-openmaic 的实战经验，还内置了一个在 Web 界面实测过的天气插件当整包参考。
+
+![dsh-plugin-developer 仓库介绍](https://cdn3.ldstatic.com/optimized/4X/e/1/c/e1c12251db62b9bb13ea13b35fe0c9779d8b6cb5_2_690x322.png)
+
+### dsh 的插件化思路
+
+dsh 的设计是「无特权内核、万物皆插件」。模型适配器、工具注册表、Agent 循环、网页界面，全都做成插件，内核只保留最少的调度能力。
+
+这和 Cat Café 的做法能对上。元规则是思想，Skill 是执行；放进 dsh 里，执行那一层再往下沉，变成可安装、可注册的插件。
+
+### 面试里可以这样讲
+
+如果拿这段经历去聊 Agent 工程，可以落在三个点上：
+
+- Skill 解决复用，插件解决交付。前者是 prompt 层的约束，后者还要多走打包、注册、运行、验证。
+- 判断插件化设计好不好，看内核还剩多少特权。内核越薄，扩展点越清楚。
+- 判断一个 Agent 项目是不是真跑通，不看 demo，看能不能拿一个整包案例改出自己的。
+
+Skill 和插件之间隔着的，主要是工程那一层。把这一层讲清楚，比说「我会写 Skill」有说服力。
 
 ## 多猫路由：当 AI 开始互相 @
 
